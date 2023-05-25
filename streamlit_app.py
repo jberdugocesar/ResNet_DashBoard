@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1FYw1gRi-S5hJHzVWiO2VdwHUrHg4t_Lo
 """
 
-!pip install streamlit -q
-
 # Commented out IPython magic to ensure Python compatibility.
 # %%writefile app.py
 # 
@@ -122,5 +120,3 @@ Original file is located at
 #     main()
 #     st.markdown("---")
 #     circle_graph()
-
-!streamlit run app.py & npx localtunnel --port=8501
