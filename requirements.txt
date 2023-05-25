@@ -1,0 +1,8 @@
+streamlit
+matplotlib
+PIL
+numpy
+torchvision
+torch
+gdown
+joblib
