@@ -16,14 +16,14 @@ memory = Memory("./cache", verbose=0)
 def cargar_modelo():
     # URL de descarga directa del archivo en Google Drive
     file_url = "https://drive.google.com/uc?export=download&id=1qz3DCKhmutALRMndTwboOJiIWpne1G0V"
-    gdown.download(file_url, "/content/resnet_model_pytorch.pth", quiet=False)
+    gdown.download(file_url, "resnet_model_pytorch.pth", quiet=False)
     
     model  = models.resnet101(weights="DEFAULT")
     num_clases = 6
     num_features = model.fc.in_features
     model.fc = nn.Linear(num_features, num_clases)
 
-    ruta_modelo = '/content/resnet_model_pytorch.pth'  # Ruta del archivo del modelo previamente guardado
+    ruta_modelo = 'resnet_model_pytorch.pth'  # Ruta del archivo del modelo previamente guardado
     model.load_state_dict(torch.load(ruta_modelo,map_location=torch.device('cpu')))
     model.eval()
     return model
