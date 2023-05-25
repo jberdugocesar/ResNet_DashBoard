@@ -1,8 +1,7 @@
 streamlit
 matplotlib
-PIL
+Pillow
 numpy
-torchvision
-torch
+torch torchvision
 gdown
 joblib
