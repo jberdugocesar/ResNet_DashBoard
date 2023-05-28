@@ -70,10 +70,10 @@ def main():
         clase_predicha = class_names[prediccion]
         
         prediccionv2 = predecir_imagen(imagen,modelV2)
-        clase_predicha = classes[prediccionv2]
+        clase_predichaV2 = classes[prediccionv2]
         
         st.markdown(f"<p style='font-size: 24px;'><span style='color: white;'>La clase predicha por el modelo viejo es: </span><span style='color: red;'>{clase_predicha}</span></p>", unsafe_allow_html=True)
-        st.markdown(f"<p style='font-size: 24px;'><span style='color: white;'>La clase predicha por el modelo V2 es: </span><span style='color: green;'>{clase_predicha}</span></p>", unsafe_allow_html=True)
+        st.markdown(f"<p style='font-size: 24px;'><span style='color: white;'>La clase predicha por el modelo V2 es: </span><span style='color: green;'>{clase_predichaV2}</span></p>", unsafe_allow_html=True)
 
 def predecir_imagen(imagen, modelo):
     transformaciones = transforms.Compose([
