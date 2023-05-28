@@ -17,7 +17,7 @@ def cargar_modelo():
     # URL de descarga directa del archivo en Google Drive
     file_url = "https://drive.google.com/uc?export=download&id=1qz3DCKhmutALRMndTwboOJiIWpne1G0V"
     gdown.download(file_url, "resnet_model_pytorch.pth", quiet=False)
-    
+   
     model  = models.resnet101(weights="DEFAULT")
     num_clases = 6
     num_features = model.fc.in_features
@@ -28,9 +28,28 @@ def cargar_modelo():
     model.eval()
     return model
 
+def cargar_modelo_mejorado():
+    file_url = "https://drive.google.com/uc?export=download&id=15iQv7NqJS7kq5GstKeyGAt5el4QqXGS7"
+    gdown.download(file_url, "new_dataset_pytorch.pth", quiet=False)
+    model  = models.resnet101(weights="DEFAULT")
+    num_clases = 6
+    num_features = model.fc.in_features
+    model.fc = nn.Linear(num_features, num_clases)
+
+    ruta_modelo = 'resnet_model_pytorch.pth'  # Ruta del archivo del modelo previamente guardado
+    model.load_state_dict(torch.load(ruta_modelo,map_location=torch.device('cpu')))
+    model.eval()
+    return model
+    
+    
+    
+    
 # Cargar el modelo
 model = cargar_modelo()
 class_names = ['Cardboard', 'Glass', 'Metal', 'Paper', 'Plastic', 'Trash']
+
+modelV2 = cargar_modelo_mejorado()
+classes = ["basura","metal","papel","plastico"]
 
 def main():
     st.title("Aplicación de predicción de imágenes")
@@ -50,7 +69,11 @@ def main():
         prediccion = predecir_imagen(imagen, model)
         clase_predicha = class_names[prediccion]
         
-        st.markdown(f"<p style='font-size: 24px;'><span style='color: white;'>La clase predicha es: </span><span style='color: red;'>{clase_predicha}</span></p>", unsafe_allow_html=True)
+        prediccionv2 = predecir_imagen(imagen,modelV2)
+        clase_predicha = classes[prediccionv2]
+        
+        st.markdown(f"<p style='font-size: 24px;'><span style='color: white;'>La clase predicha por el modelo viejo es: </span><span style='color: red;'>{clase_predicha}</span></p>", unsafe_allow_html=True)
+        st.markdown(f"<p style='font-size: 24px;'><span style='color: white;'>La clase predicha por el modelo V2 es: </span><span style='color: green;'>{clase_predicha}</span></p>", unsafe_allow_html=True)
 
 def predecir_imagen(imagen, modelo):
     transformaciones = transforms.Compose([
@@ -58,7 +81,6 @@ def predecir_imagen(imagen, modelo):
       transforms.ToTensor(),  # Convierte la imagen en un tensor
       transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])  # Normaliza los valores de los canales RGB
     ])
-
 
     imagen = transformaciones(imagen).unsqueeze(0)  # Preprocesa la imagen
     # Mover la imagen a la GPU si está disponible
