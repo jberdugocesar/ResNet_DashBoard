@@ -32,7 +32,7 @@ def cargar_modelo_mejorado():
     file_url = "https://drive.google.com/uc?export=download&id=15iQv7NqJS7kq5GstKeyGAt5el4QqXGS7"
     gdown.download(file_url, "new_dataset_pytorch.pth", quiet=False)
     model  = models.resnet101(weights="DEFAULT")
-    num_clases = 6
+    num_clases = 4
     num_features = model.fc.in_features
     model.fc = nn.Linear(num_features, num_clases)
 
