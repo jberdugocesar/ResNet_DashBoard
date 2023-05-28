@@ -28,6 +28,7 @@ def cargar_modelo():
     model.eval()
     return model
 
+@memory.cache
 def cargar_modelo_mejorado():
     file_url = "https://drive.google.com/uc?export=download&id=1vazx5dMZ_FSsL4F6wV3ChlW7O2jwH0n9"
     gdown.download(file_url, "new_dataset_model.pth", quiet=False)
