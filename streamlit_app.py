@@ -29,14 +29,14 @@ def cargar_modelo():
     return model
 
 def cargar_modelo_mejorado():
-    file_url = "https://drive.google.com/uc?export=download&id=15iQv7NqJS7kq5GstKeyGAt5el4QqXGS7"
-    gdown.download(file_url, "new_dataset_pytorch.pth", quiet=False)
+    file_url = "https://drive.google.com/uc?export=download&id=1vazx5dMZ_FSsL4F6wV3ChlW7O2jwH0n9"
+    gdown.download(file_url, "new_dataset_model.pth", quiet=False)
     model  = models.resnet101(weights="DEFAULT")
     num_clases = 4
     num_features = model.fc.in_features
     model.fc = nn.Linear(num_features, num_clases)
 
-    ruta_modelo = 'resnet_model_pytorch.pth'  # Ruta del archivo del modelo previamente guardado
+    ruta_modelo = 'new_dataset_model.pth'  # Ruta del archivo del modelo previamente guardado
     model.load_state_dict(torch.load(ruta_modelo,map_location=torch.device('cpu')))
     model.eval()
     return model
