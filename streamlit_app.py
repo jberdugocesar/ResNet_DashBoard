@@ -88,7 +88,7 @@ def predecir_imagen(imagen, modelo):
 
     # Realizar la predicción
     with torch.no_grad():
-        salida = model(imagen)
+        salida = modelo(imagen)
         _, indice = torch.max(salida, 1)
         class_index = indice.item()
     return class_index
