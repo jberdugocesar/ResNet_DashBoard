@@ -8,6 +8,7 @@ from torchvision import models, transforms
 import torch
 import torch.nn as nn
 import gdown
+import os
 from joblib import Memory
 
 # Crear una instancia de caché con el directorio de almacenamiento en memoria
