@@ -102,7 +102,7 @@ def main():
         clase_predichaV2 = classes[prediccionv2]
         
         with open('archivo_cargado.jpg', 'wb') as f:
-          f.write(uploaded_file.getvalue())
+          f.write(imagen_subida.getvalue())
         
         file_path = os.path.abspath('archivo_cargado.jpg')
         image_cv2 =  cv2.imread(file_path)
