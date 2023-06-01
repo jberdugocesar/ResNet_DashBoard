@@ -8,4 +8,4 @@ gdown
 joblib
 tensorflow
 os
-cv2
+opencv-python
