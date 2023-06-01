@@ -79,7 +79,7 @@ modelV2 = cargar_modelo_mejorado()
 classes = ["basura","metal","papel","plastico"]
 
 model_keras = cargar_modelo_keras()
-classes_keras = ["0 Metal","1 Papel","2 Plastico","3 Basura","4 vacio"]
+classes_keras = ["Metal","Papel","Plastico","Basura","Vacio"]
 
 def main():
     st.title("Aplicación de predicción de imágenes")
@@ -119,7 +119,7 @@ def main():
         predicted_keras_class = classes_keras[predicted_keras_class_index]
 
     
-        st.markdown(f"<p style='font-size: 24px;'><span style='color: white;'>La clase predicha por el modelo del prototipo es: </span><span style='color: white;'>{predicted_keras_class}</span></p>", unsafe_allow_html=True)
+        st.markdown(f"<p style='font-size: 24px;'><span style='color: white;'>La clase predicha por el modelo del prototipo es: </span><span style='color: yellow;'>{predicted_keras_class}</span></p>", unsafe_allow_html=True)
         st.markdown(f"<p style='font-size: 24px;'><span style='color: white;'>La clase predicha por el modelo viejo es: </span><span style='color: red;'>{clase_predicha}</span></p>", unsafe_allow_html=True)
         st.markdown(f"<p style='font-size: 24px;'><span style='color: white;'>La clase predicha por el modelo V2 es: </span><span style='color: green;'>{clase_predichaV2}</span></p>", unsafe_allow_html=True)
 
