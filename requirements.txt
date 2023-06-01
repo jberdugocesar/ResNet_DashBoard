@@ -7,4 +7,4 @@ torchvision
 gdown
 joblib
 tensorflow
-os
+opencv-python
