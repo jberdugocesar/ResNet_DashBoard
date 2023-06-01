@@ -47,7 +47,7 @@ def cargar_modelo_mejorado():
 def cargar_modelo_keras():
     file_url = "https://drive.google.com/uc?export=download&id=1zohV6nYVeNiSthnVbY3ZoZbd1wr2jpjy"
     gdown.download(file_url, "yony_keras_model.h5", quiet=False)
-    model = tf.keras.models.load_model('keras_model.h5', compile=False)
+    model = tf.keras.models.load_model('yony_keras_model.h5', compile=False)
     
     ruta_modelo = 'yony_keras_model.h5'  # Ruta del archivo del modelo previamente guardado
     return model
