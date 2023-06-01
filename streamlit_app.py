@@ -53,21 +53,21 @@ def cargar_modelo_keras():
     return model
     
 
-  # Función para preprocesar la imagen cargada
-  def preprocess_image_keras(image):
-  
-      # Convertir la imagen a 3 canales (RGB)
-      image_color = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+# Función para preprocesar la imagen cargada
+def preprocess_image_keras(image):
 
-      # Redimensionar la imagen a 224x224
-      image_resized = cv2.resize(image_color, (224, 224))
+  # Convertir la imagen a 3 canales (RGB)
+  image_color = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-      # Asegurarse de que la imagen tenga un tipo de datos flotante y escalar los valores de píxeles entre 0 y 1
-      image_normalized = image_resized.astype(np.float32) / 255.0
+  # Redimensionar la imagen a 224x224
+  image_resized = cv2.resize(image_color, (224, 224))
 
-      # Añadir una dimensión adicional para el tamaño de lote
-      image_tensor = np.expand_dims(image_normalized, axis=0)
-      return image_tensor
+  # Asegurarse de que la imagen tenga un tipo de datos flotante y escalar los valores de píxeles entre 0 y 1
+  image_normalized = image_resized.astype(np.float32) / 255.0
+
+  # Añadir una dimensión adicional para el tamaño de lote
+  image_tensor = np.expand_dims(image_normalized, axis=0)
+  return image_tensor
     
     
 # Cargar el modelo
