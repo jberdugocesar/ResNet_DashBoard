@@ -6,7 +6,7 @@ import matplotlib as mpl
 import tensorflow as tf
 from torchvision import models, transforms
 import torch
-import from opencv-python import cv2
+from opencv-python import cv2
 import torch.nn as nn
 import gdown
 import os
