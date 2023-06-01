@@ -3,6 +3,7 @@ import streamlit as st
 from PIL import Image
 import numpy as np
 import matplotlib as mpl
+import tensorflow as tf
 from torchvision import models, transforms
 import torch
 import torch.nn as nn
@@ -41,8 +42,32 @@ def cargar_modelo_mejorado():
     model.load_state_dict(torch.load(ruta_modelo,map_location=torch.device('cpu')))
     model.eval()
     return model
+
+@memory.cache
+def cargar_modelo_keras():
+    file_url = "https://drive.google.com/uc?export=download&id=1zohV6nYVeNiSthnVbY3ZoZbd1wr2jpjy"
+    gdown.download(file_url, "yony_keras_model.h5", quiet=False)
+    model = tf.keras.models.load_model('keras_model.h5', compile=False)
     
+    ruta_modelo = 'yony_keras_model.h5'  # Ruta del archivo del modelo previamente guardado
+    return model
     
+
+  # Función para preprocesar la imagen cargada
+  def preprocess_image_keras(image):
+  
+      # Convertir la imagen a 3 canales (RGB)
+      image_color = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+      # Redimensionar la imagen a 224x224
+      image_resized = cv2.resize(image_color, (224, 224))
+
+      # Asegurarse de que la imagen tenga un tipo de datos flotante y escalar los valores de píxeles entre 0 y 1
+      image_normalized = image_resized.astype(np.float32) / 255.0
+
+      # Añadir una dimensión adicional para el tamaño de lote
+      image_tensor = np.expand_dims(image_normalized, axis=0)
+      return image_tensor
     
     
 # Cargar el modelo
@@ -51,6 +76,9 @@ class_names = ['Cardboard', 'Glass', 'Metal', 'Paper', 'Plastic', 'Trash']
 
 modelV2 = cargar_modelo_mejorado()
 classes = ["basura","metal","papel","plastico"]
+
+model_keras = cargar_modelo_keras()
+classes_keras = ["0 Metal","1 Papel","2 Plastico","3 Basura","4 vacio"]
 
 def main():
     st.title("Aplicación de predicción de imágenes")
@@ -73,6 +101,24 @@ def main():
         prediccionv2 = predecir_imagen(imagen,modelV2)
         clase_predichaV2 = classes[prediccionv2]
         
+        with open('archivo_cargado.jpg', 'wb') as f:
+          f.write(uploaded_file.getvalue())
+        
+        file_path = os.path.abspath('archivo_cargado.jpg')
+        image_cv2 =  cv2.imread(file_path)
+
+        # Preprocesar la imagen
+        preprocessed_image_keras = preprocess_image_keras(image_cv2)
+
+     
+      
+        # Realizar la clasificación utilizando el modelo
+        predictions_keras = model_keras.predict(preprocessed_image_keras)
+        predicted_keras_class_index = np.argmax(predictions_keras[0])
+        predicted_keras_class = classes_keras[predicted_keras_class_index]
+
+    
+        st.markdown(f"<p style='font-size: 24px;'><span style='color: white;'>La clase predicha por el modelo del prototipo es: </span><span style='color: white;'>{predicted_keras_class}</span></p>", unsafe_allow_html=True)
         st.markdown(f"<p style='font-size: 24px;'><span style='color: white;'>La clase predicha por el modelo viejo es: </span><span style='color: red;'>{clase_predicha}</span></p>", unsafe_allow_html=True)
         st.markdown(f"<p style='font-size: 24px;'><span style='color: white;'>La clase predicha por el modelo V2 es: </span><span style='color: green;'>{clase_predichaV2}</span></p>", unsafe_allow_html=True)
 
